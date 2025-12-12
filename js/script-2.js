@@ -21,15 +21,10 @@ menu.addEventListener('click', (e) => {
 
 // cities zooms
 const cities_centers = {
-  "New York City": {center: [-74.0000, 40.7300], zoom: 10},
-  "Los Angeles": {center: [-118.2437, 34.0522], zoom: 10},
   "Chicago": {center: [-87.6298, 41.8781], zoom: 10},
   "Dallas": {center: [-96.7970, 32.7767], zoom: 10},
-  "Houston": {center: [-95.3698, 29.7604], zoom: 10},
-  "Washington DC": {center: [-77.0369, 38.9072], zoom: 10},
-  "Philadelphia": {center: [-75.1652, 39.9526], zoom: 10},
-  "Atlanta": {center: [-84.3880, 33.7490], zoom: 10},
-  "US": {center: [-98.5795, 39.8283], zoom: 5}
+  "Los Angeles": {center: [-118.2437, 34.0522], zoom: 10},
+  "New York City": {center: [-74.0000, 40.7300], zoom: 10},
 };
 
 // when clicking on a city name
@@ -63,7 +58,7 @@ const checkbox_municipality = document.getElementById('checkbox-municipality-inp
 
 function setMunicipalityVisibility(visible) {
   if (!window.map) return;
-  const municipality_id = 'municipality-limits';
+  const municipality_id = 'municipality-nyc-line';
 
   if (!window.map.getLayer(municipality_id)) {
     console.warn('Layer not found:', municipality_id);
@@ -100,8 +95,8 @@ window.addEventListener('load', () => {
     if (window.map) {
       checkbox_index.addEventListener('change', (e) => {
         const visibility = e.target.checked ? 'visible' : 'none';
-        window.map.setLayoutProperty('gi-fac-1990_2020', 'visibility', visibility);
-        console.log('Intensity layer gi-fac-1990_2020:', visibility);
+        window.map.setLayoutProperty('large_metros_intensity', 'visibility', visibility);
+        console.log('Intensity layer large_metros_intensity:', visibility);
       });
     } else {
       console.error('Map not found!');
@@ -125,7 +120,7 @@ let rafId;
 
 // loading popup
 map.on('load', () => {
-  const layer_index = 'gi-fac-1990_2020'; // to uniformize the names
+  const layer_index = 'large_metros_intensity'; // to uniformize the names
   const layer_base = map.getLayer(layer_index);
 
   if (!layer_base) {

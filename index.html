@@ -2,126 +2,214 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Gentrification Intensity Index</title>
+  <title>Languages spoken at home in the US and gentrification index</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css" rel="stylesheet">
   <link href="css/style-2.css" rel="stylesheet" type="text/css">
   <link href="css/style-fonts.css" rel="stylesheet" type="text/css">
-  <link href="images/ga-favicon-1.png" rel="shortcut icon" type="image/x-icon">
-  <link href="images/ga-webclip-1.png" rel="apple-touch-icon">
+  <!-- <link href="images/ga-favicon-1.png" rel="shortcut icon" type="image/x-icon">
+  <link href="images/ga-webclip-1.png" rel="apple-touch-icon"> -->
 </head>
 
 <body class="body">
-    
-    <!-- header -->
-    <section class="content-container">
 
-        <!-- card 1 –title and info -->
-        <div id="card-1" class="card-container">
-            <div class="txt-title">Gentrification Intensity Index, 1990 to 2020</div> 
-            <div class="info-wrapper">
-                <div class="txt-body">Based on indicators of class status and class upgrading.<br>16,603 tracts mapped.<br>Source: Decennial Census<br><br></div>
-                <a href="https://github.com/johnlauermann/gentrification-intensity-map" target="_blank" class="link-wrapper">
-                    <span class="txt-link">Learn more</span>
-                    <span class="txt-arrow">↗</span>
+    <!-- section 1: homepage -->
+    <section id="hero" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <nav class="hero-nav">
+                <div class="nav-links">
+                    <a href="#hero" class="nav-link active">Introduction</a>
+                    <a href="#dashboard" class="nav-link">Explore Data</a>
+                </div>
+            </nav>
+            <div class="hero-text">
+                <h1 class="hero-title">Languages spoken at home in the US</h1>
+                <p class="hero-intro">The study seeks to visualize and interpret how the process of gentrification in US tracts relates to the languages spoken in households across the four most populous metropolitan areas. It investigates whether Census tracts with high gentrification scores coincide with a high concentration of residents who speak particular languages at home, such as Spanish, Western European, and Slavic languages.</p>
+                <a href="#dashboard" class="hero-cta">
+                    <span>Explore the data</span>
+                    <span class="txt-arrow">↓</span>
                 </a>
             </div>
         </div>
-
-        <!-- card 2 –dropdowns -->
-        <div id="card-2" class="card-container">
-
-            <!-- dropdown menu -->
-            <div class="wrapper">
-                <button id="dropdown-selected-city" class="dropdown-selected">
-                    <span class="txt-arrow">↓</span>
-                    <span class="txt-menu">New York City</span>
-                </button>
-                <nav id="dropdown-menu-city" class="dropdown-menu">
-                    <a href="#" class="dropdown-link">Los Angeles</a>
-                    <a href="#" class="dropdown-link">Chicago</a>
-                    <a href="#" class="dropdown-link">Dallas</a>
-                    <a href="#" class="dropdown-link">Houston</a>
-                    <a href="#" class="dropdown-link">Washington DC</a>
-                    <a href="#" class="dropdown-link">Philadelphia</a>
-                    <a href="#" class="dropdown-link">Atlanta</a>
-                    <a href="#" class="dropdown-link">US</a>
-                </nav>
-            </div>
-
-            <div class="line"></div>
-            
-            <!-- municipality checkbox -->
-            <div id="checkbox-municipality-wrapper" class="wrapper">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="checkbox-municipality-input" class="checkbox-input" checked="">
-                    <span class="txt-menu">Central municipality</span>
-                </label>
-            </div>
-
-            <div class="line"></div>
-
-            <!-- index legend -->
-            <div id="checkbox-index-wrapper" class="wrapper">
-                <label class="checkbox-wrapper">
-                    <input type="checkbox" id="legend-index-input" class="checkbox-input" checked="">
-                    <span id="legend-text-gent" class="txt-menu">Gentrification Intensity,</span>
-                    <span id="legend-text-sd" class="txt-menu">standard deviation</span>
-                </label>
-                <div class="legend-wrapper">
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _1"></div>
-                        <div class="txt-legend">-2.5</div>
-                    </div>
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _2"></div>
-                    </div>
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _3"></div>
-                        <div class="txt-legend">-0.5</div>
-                    </div>
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _4"></div>
-                    </div>
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _5"></div>
-                        <div class="txt-legend">1.5</div>
-                    </div>
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _6"></div>
-                    </div>
-                    <div class="legend-icon-wrapper">
-                        <div class="legend-icon _7"></div>
-                        <div class="txt-legend">3.5</div>
-                    </div>
-                </div>   
-            </div>
-        </div>
-
     </section>
 
-    <section class="map-container">
-        <div id="map" class="card-map-container">
-            <!--  mapbox scripts  -->
-            <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
-            <script>
-                mapboxgl.accessToken = 'pk.eyJ1IjoiamxhdWVybWEiLCJhIjoiY21pM210azZ6MXJvajJqcHkxcGN1NGdkOCJ9.tENRQ9ijIMLWhbjI7XJzWQ'; // john's
-                window.map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/jlauerma/cmi3f9nfn004j01rs9d6m7bxj', // john's account
-                    center: [-74, 40.73],
-                    zoom: 10
-                });
-                // layers visibility on start
-                map.on('load', () => {
-                    map.setLayoutProperty('gi-fac-1990_2020', 'visibility', 'visible');
-                    map.setLayoutProperty('municipality-limits', 'visibility', 'visible');
-                });
-            </script>
+
+    <!-- section 2: lisa -->
+    <section id="lisa-section-id" class="lisa-section">
+        
+        <div class="lisa-container">
+            
+            <!-- controls -->
+            <div class="lisa-control-wrap">
+                <h2 class="lisa-title">Cluster comparison</h2>
+                
+                <!-- radio toggle 1: comparison type -->
+                <div id="comparison-type-toggle" class="radio-wrap">
+                    <label class="radio-label">
+                        <input type="radio" name="comparison-type" value="metros" class="radio-input">
+                        <span class="radio-text">Compare metros by language</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="comparison-type" value="languages" class="radio-input" checked>
+                        <span class="radio-text">Compare languages by metro</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="comparison-type" value="all" class="radio-input">
+                        <span class="radio-text">See all</span>
+                    </label>
+                </div>
+                
+                <!-- <div class="line"></div> -->
+                
+                <!-- radio toggle 2: conditional metro selection -->
+                <div id="metro-selection-toggle" class="radio-wrap">
+                    <label class="radio-label">
+                        <input type="radio" name="metro" value="chicago" class="radio-input">
+                        <span class="radio-text">Chicago</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="metro" value="dallas" class="radio-input">
+                        <span class="radio-text">Dallas</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="metro" value="los-angeles" class="radio-input">
+                        <span class="radio-text">Los Angeles</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="metro" value="new-york" class="radio-input" checked>
+                        <span class="radio-text">New York</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- map container-->
+            <div class="lisa-map-wrapper">
+                <!-- base map -->
+                <img id="base-map-id" class="base-map" src="images/1-cbsa-base/ny_1.svg" alt="base map nyc">
+                
+                <!-- active layer overlay -->
+                <img id="active-layer-id" class="active-layer" src="" alt="Language layer" style="display: none;">
+                
+                <!-- horizontal scroll container for layer thumbnails -->
+                <div class="layers-scroll">
+                    <img class="map-layer" src="images/3-cbsa-lisa-trans/ny_lisa_asian_1.png" alt="Asian languages" data-layer="asian">
+                    <img class="map-layer" src="images/3-cbsa-lisa-trans/ny_lisa_eng_1.png" alt="English only" data-layer="eng">
+                    <img class="map-layer" src="images/3-cbsa-lisa-trans/ny_lisa_indo_1.png" alt="Indo-European languages" data-layer="indo">
+                    <img class="map-layer" src="images/3-cbsa-lisa-trans/ny_lisa_slavic_1.png" alt="Slavic languages" data-layer="slavic">
+                    <img class="map-layer" src="images/3-cbsa-lisa-trans/ny_lisa_spa_1.png" alt="Spanish" data-layer="spa">
+                    <img class="map-layer" src="images/3-cbsa-lisa-trans/ny_lisa_w_eu_1.png" alt="Western European" data-layer="w_eu">
+                </div>
+            </div>
+            
         </div>
+        
+    </section>
+
+
+    <!-- section z: dashboard -->
+    <section id="dashboard" class="dashboard-section">
+        
+        <!-- header -->
+        <div class="content-container">
+
+            <!-- card 1 –title and info -->
+            <div id="card-1" class="card-container">
+                <div class="txt-title">Languages spoken at home in the US and gentrification index</div> 
+            </div>
+
+            <!-- card 2 –dropdowns -->
+            <div id="card-2" class="card-container">
+
+                <!-- dropdown menu -->
+                <div class="wrapper">
+                    <button id="dropdown-selected-city" class="dropdown-selected">
+                        <span class="txt-arrow">↓</span>
+                        <span class="txt-menu">New York City</span>
+                    </button>
+                    <nav id="dropdown-menu-city" class="dropdown-menu">
+                        <a href="#" class="dropdown-link">Chicago</a>
+                        <a href="#" class="dropdown-link">Dallas</a>
+                        <a href="#" class="dropdown-link">Los Angeles</a>
+                    </nav>
+                </div>
+
+                <div class="line"></div>
+                
+                <!-- municipality checkbox -->
+                <div id="checkbox-municipality-wrapper" class="wrapper">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="checkbox-municipality-input" class="checkbox-input" checked="">
+                        <span class="txt-menu">Central municipality</span>
+                    </label>
+                </div>
+
+                <div class="line"></div>
+
+                <!-- index legend -->
+                <div id="checkbox-index-wrapper" class="wrapper">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="legend-index-input" class="checkbox-input" checked="">
+                        <span id="legend-text-gent" class="txt-menu">Gentrification Intensity,</span>
+                        <span id="legend-text-sd" class="txt-menu">standard deviation</span>
+                    </label>
+                    <div class="legend-wrapper">
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _1"></div>
+                            <div class="txt-legend">-2.5</div>
+                        </div>
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _2"></div>
+                        </div>
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _3"></div>
+                            <div class="txt-legend">-0.5</div>
+                        </div>
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _4"></div>
+                        </div>
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _5"></div>
+                            <div class="txt-legend">1.5</div>
+                        </div>
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _6"></div>
+                        </div>
+                        <div class="legend-icon-wrapper">
+                            <div class="legend-icon _7"></div>
+                            <div class="txt-legend">3.5</div>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+
+        </div>
+
+        <div class="map-container">
+            <div id="map" class="card-map-container">
+                <!--  mapbox scripts  -->
+                <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
+                <script>
+                    mapboxgl.accessToken = 'pk.eyJ1IjoiYWxpY2V2aWdnaWFuaSIsImEiOiJjbG53Mzc5MDcwNGplMm1wY3UwcDZsOTNvIn0.YHmzjHuq5sSd-lgg22nEjg';
+                    window.map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/aliceviggiani/cmdj8bubf00bs01s541k72w6k',
+                        center: [-74, 40.73],
+                        zoom: 10
+                    });
+                    // layers visibility on start
+                    map.on('load', () => {
+                        map.setLayoutProperty('large_metros_intensity', 'visibility', 'visible');
+                        map.setLayoutProperty('municipality-nyc-line', 'visibility', 'visible');
+                    });
+                </script>
+            </div>
+        </div>
+
     </section>
 
 
     <script src="js/script-2.js"></script>
+    <script src="js/script-sec2-1.js"></script>
 
 </body>
