@@ -62,7 +62,7 @@ function updateLayers(metro) {
     layer.src = `images/2-cbsa-lisa/${metroPrefix[metro]}_lisa_${layers[index]}_1.svg`;
   });
     
-    // Hide active layer when metro changes
-    activeLayer.style.display = 'none';
-    mapLayers.forEach(l => l.classList.remove('active'));
+  // Hide active layer when metro changes
+  activeLayer.style.display = 'none';
+  mapLayers.forEach(l => l.classList.remove('active'));
 }
